@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  order-service:
+    build: .
+    container_name: order-service
+    ports:
+      - "3002:3002"
+    environment:
+      - NODE_ENV=development
+      - PORT=3002
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=order_db
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - PRODUCT_SERVICE_URL=http://product-service:3000
+      - CUSTOMER_SERVICE_URL=http://customer-service:3001
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - order-network
+      - microservices-network
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:14-alpine
+    container_name: order-postgres
+    ports:
+      - "5454:5432" # Publish PostgreSQL port on 5454 as requested
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=order_db
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d
+    networks:
+      - order-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+networks:
+  order-network:
+    driver: bridge
+  microservices-network:
+    external: true
+
+volumes:
+  postgres-data:
