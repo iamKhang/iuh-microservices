@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  customer-service:
+    build: .
+    container_name: customer-service
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+      - MONGO_URI=mongodb://mongo:27017/customer_db
+    depends_on:
+      mongo:
+        condition: service_healthy
+    networks:
+      - customer-network
+    restart: unless-stopped
+
+  mongo:
+    image: mongo:6-jammy
+    container_name: customer-mongo
+    ports:
+      - "27017:27017" # Publish MongoDB port
+    volumes:
+      - mongo-data:/data/db
+      - ./db/init/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    networks:
+      - customer-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+networks:
+  customer-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
