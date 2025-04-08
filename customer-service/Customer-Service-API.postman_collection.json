@@ -7,6 +7,125 @@
   },
   "item": [
     {
+      "name": "Loyalty Points",
+      "item": [
+        {
+          "name": "Get Customer Loyalty Points",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3001/api/customers/{{customerId}}/loyalty-points",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "customers",
+                "{{customerId}}",
+                "loyalty-points"
+              ]
+            },
+            "description": "Get a customer's loyalty points information"
+          },
+          "response": []
+        },
+        {
+          "name": "Add Loyalty Points",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"points\": 500,\n    \"description\": \"Purchase reward\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/customers/{{customerId}}/loyalty-points/add",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "customers",
+                "{{customerId}}",
+                "loyalty-points",
+                "add"
+              ]
+            },
+            "description": "Add loyalty points to a customer's account"
+          },
+          "response": []
+        },
+        {
+          "name": "Redeem Loyalty Points",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"points\": 200,\n    \"description\": \"Discount coupon redemption\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/customers/{{customerId}}/loyalty-points/redeem",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "customers",
+                "{{customerId}}",
+                "loyalty-points",
+                "redeem"
+              ]
+            },
+            "description": "Redeem loyalty points from a customer's account"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Loyalty Points History",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3001/api/customers/{{customerId}}/loyalty-points/history",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3001",
+              "path": [
+                "api",
+                "customers",
+                "{{customerId}}",
+                "loyalty-points",
+                "history"
+              ]
+            },
+            "description": "Get a customer's loyalty points transaction history"
+          },
+          "response": []
+        }
+      ],
+      "description": "Endpoints for managing customer loyalty points"
+    },
+    {
       "name": "Get All Customers",
       "request": {
         "method": "GET",

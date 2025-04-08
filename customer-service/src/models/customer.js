@@ -45,6 +45,30 @@ const customerSchema = new mongoose.Schema({
     type: String,
     enum: ['male', 'female', 'other', 'prefer not to say']
   },
+  // Loyalty points
+  loyaltyPoints: {
+    points: {
+      type: Number,
+      default: 0,
+      min: 0
+    },
+    tier: {
+      type: String,
+      enum: ['bronze', 'silver', 'gold', 'platinum'],
+      default: 'bronze'
+    },
+    history: [
+      {
+        points: Number,
+        action: String, // 'earned', 'redeemed', 'expired', 'adjusted'
+        description: String,
+        date: {
+          type: Date,
+          default: Date.now
+        }
+      }
+    ]
+  },
   // Metadata
   createdAt: {
     type: Date,
@@ -59,9 +83,9 @@ const customerSchema = new mongoose.Schema({
 });
 
 // Create a text index for search functionality
-customerSchema.index({ 
-  firstName: 'text', 
-  lastName: 'text', 
+customerSchema.index({
+  firstName: 'text',
+  lastName: 'text',
   email: 'text',
   'address.city': 'text',
   'address.country': 'text'

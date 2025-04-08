@@ -27,6 +27,36 @@ db.customers.insertMany([
     },
     dateOfBirth: new Date("1985-05-15"),
     gender: "male",
+    loyaltyPoints: {
+      points: 5000,
+      tier: "gold",
+      history: [
+        {
+          points: 2500,
+          action: "earned",
+          description: "Initial signup bonus",
+          date: new Date(new Date().setDate(new Date().getDate() - 90))
+        },
+        {
+          points: 1500,
+          action: "earned",
+          description: "Purchase reward",
+          date: new Date(new Date().setDate(new Date().getDate() - 60))
+        },
+        {
+          points: 1500,
+          action: "earned",
+          description: "Referral bonus",
+          date: new Date(new Date().setDate(new Date().getDate() - 30))
+        },
+        {
+          points: -500,
+          action: "redeemed",
+          description: "Discount coupon",
+          date: new Date(new Date().setDate(new Date().getDate() - 15))
+        }
+      ]
+    },
     createdAt: new Date(),
     updatedAt: new Date()
   },
@@ -48,6 +78,24 @@ db.customers.insertMany([
       productUpdates: true
     },
     gender: "female",
+    loyaltyPoints: {
+      points: 1200,
+      tier: "silver",
+      history: [
+        {
+          points: 1000,
+          action: "earned",
+          description: "Initial signup bonus",
+          date: new Date(new Date().setDate(new Date().getDate() - 45))
+        },
+        {
+          points: 200,
+          action: "earned",
+          description: "Purchase reward",
+          date: new Date(new Date().setDate(new Date().getDate() - 20))
+        }
+      ]
+    },
     createdAt: new Date(),
     updatedAt: new Date()
   },
@@ -115,9 +163,9 @@ db.customers.insertMany([
 ]);
 
 // Create indexes
-db.customers.createIndex({ 
-  firstName: "text", 
-  lastName: "text", 
+db.customers.createIndex({
+  firstName: "text",
+  lastName: "text",
   email: "text",
   "address.city": "text",
   "address.country": "text"

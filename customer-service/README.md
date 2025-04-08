@@ -6,6 +6,7 @@ A simple Express.js microservice for managing customer information with MongoDB.
 
 - CRUD operations for customers
 - Flexible schema with MongoDB to handle varying customer information
+- Loyalty points management system
 - Docker and Docker Compose configuration
 - RESTful API
 - Text search functionality
@@ -18,6 +19,10 @@ A simple Express.js microservice for managing customer information with MongoDB.
 - `PUT /api/customers/:id` - Update a customer
 - `DELETE /api/customers/:id` - Delete a customer
 - `GET /api/customers/search?query=text` - Search for customers
+- `GET /api/customers/:id/loyalty-points` - Get customer loyalty points
+- `POST /api/customers/:id/loyalty-points/add` - Add loyalty points
+- `POST /api/customers/:id/loyalty-points/redeem` - Redeem loyalty points
+- `GET /api/customers/:id/loyalty-points/history` - Get loyalty points history
 - `GET /health` - Health check endpoint
 
 ## Getting Started
@@ -85,6 +90,10 @@ The customer model has a flexible schema to accommodate varying levels of inform
 - `preferences` - Customer preferences (newsletter, marketing emails, etc.)
 - `dateOfBirth` - Customer's date of birth
 - `gender` - Customer's gender
+- `loyaltyPoints` - Customer's loyalty program information
+  - `points` - Current points balance
+  - `tier` - Membership tier (bronze, silver, gold, platinum)
+  - `history` - Array of point transactions
 
 ### Metadata
 - `createdAt` - Creation timestamp
